@@ -10,7 +10,10 @@
 //   showShopItems(databaseRef, 'cameras', { byChild: true, child: 'category', equalTo: 'cameras' });
 // });
 
-
+document.addEventListener('DOMContentLoaded', function () {
+  const productsRoot = document.getElementById('products');
+  showShopItems(databaseRef, productsRoot);
+});
 //root products
 function showShopItemsMain(databaseRef, root, filter, categoryName) {
   // Clear the root element before populating it with new items
@@ -21,6 +24,7 @@ function showShopItemsMain(databaseRef, root, filter, categoryName) {
   showShopItems(databaseRef, root, filter)
   // Query the database based on the filter
   let query = databaseRef.ref('products');
+  console.log(query)
   if (filter && filter.byChild && filter.child && filter.equalTo) {
     query = query.orderByChild(filter.child).equalTo(filter.equalTo);
   }
@@ -46,50 +50,77 @@ let shopItems = {
 
 
 
-function showShopItems(refDB, mainRoot, filter = !null){
-//get products from the database
-let counter = 0;
-console.log(mainRoot)
-let rootRow = createRow(mainRoot, true);
+// function showShopItems(refDB, mainRoot, filter = !null){
+// //get products from the database
+// let counter = 0;
+// console.log(mainRoot)
+// let rootRow = createRow(mainRoot, true);
 
-//build the rows and colums
-let DBref = refDB.ref('products');
+// //build the rows and colums
+// let DBref = refDB.ref('products');
 
-if(filter){
+// if(filter){
 
-if(filter.byChild){
+// if(filter.byChild){
 
-  DBref = DBref.orderByChild(filter.child);
+//   DBref = DBref.orderByChild(filter.child);
 
-   if(filter.range){
-       DBref = DBref.startAt(filter.range.startAt).endAt(filter.range.endAt);
-   }
-   if(filter.equalTo){
-      DBref = DBref.equalTo(filter.equalTo);
-   }
+//    if(filter.range){
+//        DBref = DBref.startAt(filter.range.startAt).endAt(filter.range.endAt);
+//    }
+//    if(filter.equalTo){
+//       DBref = DBref.equalTo(filter.equalTo);
+//    }
+// }
+
+// if(filter.limitToFirst){
+//   DBref = DBref.limitToFirst(filter.limitToFirst.limit);
+// }
+
+// }
+
+// console.log(mainRoot)
+
+
+// DBref.on('child_added', snap => {
+
+//   if(counter < 4){
+//     buildProduct(snap, rootRow);
+//     counter++;
+//   }else {
+//     rootRow = createRow(mainRoot, true);
+//     buildProduct(snap, rootRow);
+//     counter -= 3;
+//   }
+// });
+
+// }
+
+
+function showShopItems(databaseRef, root) {
+  databaseRef.ref('products').on('value', function (snapshot) {
+    root.innerHTML = ''; // Clear the root element before appending products
+
+    snapshot.forEach(function (childSnapshot) {
+      let productObj = childSnapshot;
+
+      // Create rows to group the products
+      let row = createRow(root, true);
+
+      // Build each product and append it to the row
+      buildProduct(productObj, row);
+    });
+  });
 }
+// By adding root.innerHTML = ''; at the beginning of the showShopItems function, you ensure that the root element is cleared before appending the products. This should prevent the "Cannot read properties of null" error.
 
-if(filter.limitToFirst){
-  DBref = DBref.limitToFirst(filter.limitToFirst.limit);
-}
-
-}
+// If the error persists, please double-check that the root element exists and has the correct ID or class name specified in your HTML file. Additionally, make sure that you have correctly initialized Firebase and have the appropriate data in your Firebase Realtime Database.
 
 
 
-DBref.on('child_added', snap => {
 
-  if(counter < 4){
-    buildProduct(snap, rootRow);
-    counter++;
-  }else {
-    rootRow = createRow(mainRoot, true);
-    buildProduct(snap, rootRow);
-    counter -= 3;
-  }
-});
 
-}
+
 
 
 

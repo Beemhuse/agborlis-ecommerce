@@ -1,7 +1,7 @@
 
 let databaseRef = firebase.database();
 
-
+console.log(databaseRef)
 
 //write new user inb the database
 function writeNewUser(userID, name, email, photoURL, emailVerified){
