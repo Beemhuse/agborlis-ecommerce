@@ -4,17 +4,17 @@ let databaseRef = firebase.database();
 console.log(databaseRef)
 
 //write new user inb the database
-function writeNewUser(userID, name, email, photoURL, emailVerified){
+function writeNewUser(userID, name, email, photoURL, emailVerified, role){
   databaseRef.ref('users/' + userID).set({
     username:name,
     email:email,
     photo: photoURL,
-    emailVerified: emailVerified
+    emailVerified: emailVerified,
+    role: role 
   }).then( e => {
     window.location.href ='index.html';
   });
 }
-
 //Create new product in the database
 function createNewProduct(provider,photo, header, description,large_description,category,stars, price){
   //add a new

@@ -2,43 +2,201 @@
 <html>
 <head>
   <title>Admin Product Form</title>
+  <meta charset="UTF-8">
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel='stylesheet' href='https://cdn.materialdesignicons.com/3.3.92/css/materialdesignicons.min.css'/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-app.js"></script>
+
+<!-- Add additional services that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-database.js"></script>
+
+<link rel='stylesheet' href='css/style.css'/>
+<style>
+
+  form{
+    width: 500px;
+    /* width: fit-content; */
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin: 100px auto;
+    padding: 20px 10px;
+    border: solid red;
+background: rgba(255, 255, 255, 0.2);
+background-image: linear-gradient(60deg,#AF40FF, #5B42F3 150%,#00DDEB);
+
+/* box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px; */
+
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+
+  }
+  h2{
+    color: #fff;
+    text-align: center;
+  }
+  input, textarea{
+    padding: 10px;
+    width: 70%;
+  }
+  .button-63 {
+    /* margin-top: 40px; */
+  align-items: center;
+  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  font-family: Phantomsans, sans-serif;
+  font-size: 20px;
+  justify-content: center;
+  line-height: 1em;
+  max-width: 100%;
+  min-width: 140px;
+  padding: 19px 24px;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.button-63:active,
+.button-63:hover {
+  outline: 0;
+}
+
+.flex{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: solid red; */
+}
+p{
+  font-size: 20px;
+}
+
+@media (min-width: 768px) {
+  .button-63 {
+    font-size: 24px;
+    min-width: 196px;
+  }
+}
+</style>
+
 </head>
 <body>
-  <h1>Create Product</h1>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#" id='home'>Agborlis´s Shop</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href='index.html'>Home</a></li>
+          <li class='drowpdown'>
+            <a href="#" class='dropdown-toggle' data-toggle='dropdown'>Categories <span class='caret'></span></a>
+            <ul class='dropdown-menu '>
+              <li><a href='index.html?c=tablets'>Tablets</a></li>
+              <li><a href='index.html?c=phones'>Phones</a></li>
+              <li><a href='index.html?c=laptops'>Laptops</a></li>
+              <li><a href='index.html?c=gaming'>Gaming</a></li>
+              <li><a href='index.html?c=cameras'>Cameras</a></li>
+            </ul>
+            </li>
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+
+          <li class="dropdown">
+            <a href='#' id='user_info' class='dropdown-toggle' data-toggle="dropdown" >Hello, Sign in <span class="caret"></a>
+              <ul class="dropdown-menu ">
+
+                <li id='settings'><a href="#" style='text-align:center'>Settings</a></li>
+                <li id='logout'><a href="#" style='text-align:center'>Logout <span class='glyphicon glyphicon-log-out'></span></a></li>
+                <li id='login'><a href='auth.html?auth=login' style='text-align:center'>Login <span class='glyphicon glyphicon-log-in'></span></a></li>
+                <li id='signUp'><a href='auth.html?auth=signup' style='text-align:center'>Sign Up <span class='glyphicon glyphicon-user'></span></a></li>
+
+              </ul>
+            </li>
+            <li><a href='cart.html'>Cart <span class='glyphicon glyphicon-shopping-cart'></span></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
   <form id="newProductForm">
-    <label for="provider">Provider:</label>
-    <input type="text" id="provider" required>
-    
-    <label for="productImage">Product Image:</label>
-    <input type="file" id="productImage" accept="image/*" required>
-    
-    <label for="header">Title:</label>
-    <input type="text" id="header" required>
-    
-    <label for="description">Description:</label>
-    <textarea id="description" required></textarea>
-    
-    <label for="large_description">Large Description:</label>
-    <textarea id="large_description" required></textarea>
-    
-    <label for="category">Category:</label>
-    <input type="text" id="category" required>
-    
-    <label for="stars">Stars:</label>
-    <input type="number" id="stars" min="0" max="5" step="0.1" required>
-    
-    <label for="price">Price:</label>
-    <input type="number" id="price" min="0" step="0.01" required>
-    
-    <button type="submit">Add Product</button>
+    <h2>Create a new Product</h2>
+    <div class="flex">
+      
+      <p for="provider">Provider:</p>
+      <input type="text" id="provider" required>
+    </div>
+    <div class="flex">
+      <p for="productImage">Product Image:</p>
+      <input type="file" id="productImage" accept="image/*" required>  
+      
+    </div>
+    <div class="flex">
+      
+      <p for="header">Title:</p>
+      <input type="text" id="header" required>
+      
+    </div>
+    <div class="flex">
+      <p for="description">Description:</p>
+      <textarea id="description" required></textarea>
+    </div>
+    <div class="flex">
+      <p for="large_description">Large Description:</p>
+      <textarea id="large_description" required></textarea>
+    </div>
+<div class="flex">
+  <p for="category">Category:</p>
+  <input type="text" id="category" required>
+</div> 
+ <div class="flex">
+   <p for="stars">Stars:</p>
+   <input type="number" id="stars" min="0" max="5" step="0.1" required>
+ </div>
+
+<div class="flex">
+  <p for="price">Price:</p>
+  <input type="number" id="price" min="0" step="0.01" required>
+  </div>    
+    <button class="button-63" type="submit">Add Product</button>
   </form>
   
-  
+  <div class='container-fluid text-center padding-1 footer'>
+    <h4>Made By Agborlis inc</h4>
+  </div>
  
   <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
   <script src='js/firebaseConfig.js'></script>
   <!-- <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase-storage.js"></script> -->
+  <script src="./js/database.js"></script>
   <script src="./js/admin.js"></script>
+  <script src="./js/auth.js"></script>
   <script>
     
   </script>

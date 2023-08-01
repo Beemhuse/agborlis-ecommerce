@@ -90,6 +90,24 @@ submitS.addEventListener('click', e => {
 
 });
 
+function redirectBasedOnRole(uid) {
+  console.log(uid)
+  databaseRef.ref('users/' + uid).once('value')
+    .then(function(snapshot) {
+      const role = snapshot.val().role;
+      if (role === "admin") {
+        console.log(role)
+        window.location.href = 'admin.html';
+      } else {
+        window.location.href = 'index.html';
+      }
+    })
+    .catch(function(error) {
+      console.error("Error checking user role:", error);
+      // Redirect to a default page in case of an error or user role not found
+      window.location.href = '../index.html';
+    });
+  }
 
 
 //Listener for changes
@@ -108,21 +126,25 @@ firebase.auth().onAuthStateChanged(function(user) {
 
    //write the user in the database
    let check = 0;
-
+   var uid = user.uid;
+console.log(uid)
+   // Check user's role and redirect accordingly
    firebase.database().ref('users/' + uid).on('value', snap => {
      check = 1;
    });
 
    if(check ==  0){
+console.log(uid)
+    writeNewUser(uid, displayName, email, photoURL, emailVerified, "user");
 
-    writeNewUser(uid, displayName, email, photoURL, emailVerified);
     //window.location.href ='index.html';
   }else {
-    window.location.href ='index.html';
+   redirectBasedOnRole(uid);
+
+    // window.location.href ='index.html';
   }
 
-
-
+  
 
 
     //send email verification
