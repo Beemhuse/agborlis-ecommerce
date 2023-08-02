@@ -112,7 +112,7 @@ right:20px;
   margin-bottom:0;
   border-radius: 0;
   border: 0;
-  background-color: #2f323a; !important;
+  background-color: #2f323a !important;
   box-shadow: 2px 5px 5px 0 rgba(0,0,0,0.2) !important;
 }
 
@@ -124,7 +124,7 @@ right:20px;
 .navbar-nav a:hover {
   color: white !important;
   border-bottom: 2px solid white;
-  background-color: #2f323a; !important;
+  background-color: #2f323a !important;
 }
 .active a:hover {
   color:white !important;
@@ -148,7 +148,7 @@ right:20px;
 /*Comments */
 
 .btn-comment {
-  background-color: #2f323a; !important;
+  background-color: #2f323a !important;
   color:white !important;
   transition: 0.2s;
   margin-top: 10px !important;
@@ -162,7 +162,7 @@ right:20px;
 }
 
 .btn-cart {
-  background-color: #2f323a; !important;
+  background-color: #2f323a !important;
   color:white !important;
   transition: 0.2s;
   /*margin-top: 10px !important;*/
