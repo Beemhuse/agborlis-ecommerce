@@ -95,7 +95,7 @@ function buildProduct(productObj, root){
 
   let price = document.createElement('h4');
   price.classList.add('text-center');
-  let priceNode = document.createTextNode('$' + productObj.val().price);
+  let priceNode = document.createTextNode('N' + productObj.val().price);
   price.appendChild(priceNode);
 
 /*  let button = document.createElement('button');

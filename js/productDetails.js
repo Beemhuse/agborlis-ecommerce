@@ -105,7 +105,7 @@ function buildProductDetails(root, productObj){
   inputNumber.addEventListener('change', e => {
     let price = document.getElementById('price');
     let priceHidden = document.getElementById('priceHidden');
-    price.innerHTML = '$' + Number(priceHidden.innerHTML) * Number(inputNumber.value);
+    price.innerHTML = 'N' + Number(priceHidden.innerHTML) * Number(inputNumber.value);
   });
 
   quantity.appendChild(h4Quantity);

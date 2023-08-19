@@ -71,12 +71,12 @@
   </nav>
 
   <div class='container-fluid'>
-    <div class='container  checkout' id='checkout'>
+    <div class='container  ' id='transaction'>
     </div>
 
-   <div  class="container padding-2" id='cart'>
-   </div>
+
 </div>
+
 
 <div class='container-fluid text-center padding-1 footer'>
   <h4>Made By Agborlis inc</h4>
@@ -118,6 +118,19 @@
         buildLoginBtn(cart, 'auth.html?auth=login');
       }
     });
+
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const transactionReference = urlParams.get('transaction_reference');
+
+    // Display the transaction reference on the success page
+    if (transactionReference) {
+      const transactionElement = document.getElementById('transaction');
+      const transactionTextNode = document.createTextNode('Transaction Reference: ' + transactionReference);
+      transactionElement.appendChild(transactionTextNode);
+      document.body.appendChild(transactionElement);
+    }
+
   </script>
   </body>
   </html>

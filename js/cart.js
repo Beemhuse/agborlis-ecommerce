@@ -64,7 +64,7 @@ function buildCartProducts(productObj, root){
   h3header.appendChild(h3TextNode);
 
   let h4Price= document.createElement('h4');
-  let h4TextNode = document.createTextNode('$' + productObj.val().price);
+  let h4TextNode = document.createTextNode('N' + productObj.val().price);
   h4Price.appendChild(h4TextNode);
 
   let priceHidden = document.createElement('p');
@@ -119,9 +119,9 @@ let user = firebase.auth().currentUser;
   transform:translate(-50%, 0);
   `;
 
-  h4Price.innerHTML = '$' + Number(priceHidden.innerHTML) * Number(quantity.value);
+  h4Price.innerHTML = 'N' + Number(priceHidden.innerHTML) * Number(quantity.value);
   quantity.addEventListener('change', e => {
-    h4Price.innerHTML = '$' + Number(priceHidden.innerHTML) * Number(quantity.value);
+    h4Price.innerHTML = 'N' + Number(priceHidden.innerHTML) * Number(quantity.value);
     firebase.database().ref('cart/'+ user.uid + '/' + productObj.key + '/quantity').set(quantity.value);
   });
 
@@ -187,8 +187,31 @@ function buildProceedToCheckOut(list, root){
   width:100%;
   margin-bottom:0;
   `;
+
   btn.appendChild(btnTextNode);
 
+  btn.addEventListener('click', () => {
+    // Initialize Paystack Inline
+    let handler = PaystackPop.setup({
+      key: 'pk_test_6bcbeebce0a75224cd8969b3049c5d64addb21eb', // Replace with your actual Paystack public key
+      email: "customer@gmail.com",
+      amount: total * 100,
+      ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+      // label: "Optional string that replaces customer email"
+      onClose: function(){
+        alert('Window closed.');
+      },
+      callback: function(response){
+        let message = 'Payment complete! Reference: ' + response.reference;
+        alert(message);
+        // window.location.href = 'success.html';
+        window.location.href = 'success.html?transaction_reference=' + response.reference;
+
+      }
+    });
+    handler.openIframe(); // Open the Paystack iframe for payment
+  });
+  
   col1.appendChild(h4NItems);
 
   col2.appendChild(h4Total);
