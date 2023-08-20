@@ -45,7 +45,7 @@ function buildProductDetails(root, productObj){
   stars.style = 'padding:10px';
 
   let price = document.createElement('h3');
-  let priceTextNode = document.createTextNode('$' + productObj.val().price);
+  let priceTextNode = document.createTextNode('N' + productObj.val().price);
   price.appendChild(priceTextNode);
   price.setAttribute('id', 'price')
   let priceHidden = document.createElement('p');

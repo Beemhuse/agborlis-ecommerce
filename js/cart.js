@@ -1,6 +1,5 @@
 
 
-
 function buildLoginBtn(root, href){
 let h3 = document.createElement('h3');
 let h3TextNode  =document.createTextNode('You are not Logged in');
@@ -202,8 +201,11 @@ function buildProceedToCheckOut(list, root){
         alert('Window closed.');
       },
       callback: function(response){
-        let message = 'Payment complete! Reference: ' + response.reference;
+        let orderReference = response?.reference
+        let message = 'Payment complete! Reference: ' + orderReference;
         alert(message);
+        saveOrderToDatabase(orderReference, total, list);
+
         // window.location.href = 'success.html';
         window.location.href = 'success.html?transaction_reference=' + response.reference;
 
@@ -212,6 +214,38 @@ function buildProceedToCheckOut(list, root){
     handler.openIframe(); // Open the Paystack iframe for payment
   });
   
+  function saveOrderToDatabase(orderReference, orderTotal, items) {
+    let user = firebase.auth().currentUser;
+    if (user) {
+      // Create a new reference for the order under the user's orders node
+      let orderRef = firebase.database().ref('orders/' + user.uid).push();
+  console.log(orderRef)
+      // Convert cart items to an array to store in the database
+      let itemsArray = [];
+      items.forEach(item => {
+        itemsArray.push({
+          title: item.val().title,
+          price: item.val().price,
+          quantity: item.val().quantity
+          // Add any other relevant properties
+        });
+      });
+  
+      // Save the order details to the order reference
+      orderRef.set({
+        reference: orderReference,
+        total: orderTotal,
+        items: itemsArray
+      })
+      .then(() => {
+        console.log('Order saved to database');
+      })
+      .catch(error => {
+        console.error('Error saving order to database:', error);
+      });
+    }
+  }
+
   col1.appendChild(h4NItems);
 
   col2.appendChild(h4Total);
