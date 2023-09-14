@@ -206,8 +206,7 @@ function buildProceedToCheckOut(list, root){
         alert(message);
         saveOrderToDatabase(orderReference, total, list);
 
-        // window.location.href = 'success.html';
-        window.location.href = 'success.html?transaction_reference=' + response.reference;
+        window.location.href = 'orders.html?transaction_reference=' + response.reference;
 
       }
     });
@@ -219,7 +218,7 @@ function buildProceedToCheckOut(list, root){
     if (user) {
       // Create a new reference for the order under the user's orders node
       let orderRef = firebase.database().ref('orders/' + user.uid).push();
-  console.log(orderRef)
+  // console.log(orderRef)
       // Convert cart items to an array to store in the database
       let itemsArray = [];
       items.forEach(item => {

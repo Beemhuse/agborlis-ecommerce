@@ -1,6 +1,3 @@
-//createNewProduct('Alejandro Hernandez', 'res/products/product09.jpg', 'Aluminium Cilinder', 'A cilinder made by aluminium', 'this box bla bla', 'furniture', 4, 3000);
-//DOM
-
 
 //panels
 const loginPanel = document.getElementById('loginPanel');

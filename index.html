@@ -94,6 +94,10 @@
 
 
 </div>
+<div class='container-fluid padding-2 justify-content-center' id='cameras'>
+
+
+</div>
 
 
 
@@ -110,13 +114,55 @@
   <script src='js/userInfo.js'></script>
   <script src='js/URLparams.js'></script>
   <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const productsContainer = document.getElementById('store_body');
+    // Call the showShopItems function with the databaseRef and the container element
+    showShopItems(databaseRef, productsContainer);
+  });
+
+
+  // Function to display products based on category
+  function displayCategory(category) {
+    // Hide all category containers
+    const categoryContainers = ['tablets', 'phones', 'laptops', 'cameras'];
+    for (const containerId of categoryContainers) {
+      document.getElementById(containerId).style.display = 'none';
+    }
+
+    // Show the selected category container
+    if (category) {
+        document.getElementById(category).style.display = 'block';
+        const categoryContainer = document.getElementById(category);
+        categoryContainer.innerHTML = ''; // Clear previous items
+
+        // Fetch and display items from Firebase based on the selected category
+        showShopItems(databaseRef, categoryContainer, {
+          byChild: true,
+          child: 'category',
+          equalTo: category,
+        });
+      }
+      }
+
+  if (c) {
+      // If 'c' parameter is in the URL, display the selected category
+      displayCategory(c);
+    } else {
+      // If no 'c' parameter, hide all categories
+      displayCategory('products');
+      
+    }
+</script>
+ 
+  <!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
-    const productsContainer = document.getElementById('productsContainer');
+    const productsContainer = document.getElementById('store_body');
 // console.log(productsContainer)
     // Call the showShopItems function with the databaseRef and the container element
     showShopItems(databaseRef, productsContainer);
   });
   if(c != null){
+    // console.log(c)
   showShopItems(databaseRef, products, filter = {
     byChild:true,
     child:'category',
@@ -136,7 +182,7 @@ showShopItemsMain(databaseRef, tablets, filter = {
   equalTo:'tablets',
   limitToFirst:{limit:4},
 }, 'tablets');
-
+console.log(tablets)
 const phones = document.getElementById('phones');
 showShopItemsMain(databaseRef, phones, filter = {
   byChild:true,
@@ -147,12 +193,13 @@ showShopItemsMain(databaseRef, phones, filter = {
 
 
 const laptops = document.getElementById('laptops');
-showShopItemsMain(databaseRef, laptops, filter = {
+let test = showShopItemsMain(databaseRef, laptops, filter = {
   byChild:true,
   child:'category',
   equalTo:'laptops',
   limitToFirst:{limit:4},
 }, 'laptops');
+console.log(test)
 
 const gaming = document.getElementById('gaming');
 showShopItemsMain(databaseRef, gaming, filter = {
@@ -174,10 +221,12 @@ showShopItemsMain(databaseRef, cameras, filter = {
   tablets.style = 'display:none';
   phones.style = 'display:none';
   laptops.style = 'display:none';
-  gaming.style = 'display:none';
+  // gaming.style = 'display:none';
   cameras.style  ='display:none';
 }
-  </script>
+
+
+  </script> -->
 
 </body>
 </html>

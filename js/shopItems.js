@@ -97,21 +97,45 @@ let shopItems = {
 // }
 
 
+// function showShopItems(databaseRef, root) {
+//   databaseRef.ref('products').on('value', function (snapshot) {
+//     root.innerHTML = ''; // Clear the root element before appending products
+
+//     snapshot.forEach(function (childSnapshot) {
+//       let productObj = childSnapshot;
+
+//       // Create rows to group the products
+//       let row = createRow(root, true);
+
+//       // Build each product and append it to the row
+//       buildProduct(productObj, row);
+//     });
+//   });
+// }
+
 function showShopItems(databaseRef, root) {
   databaseRef.ref('products').on('value', function (snapshot) {
     root.innerHTML = ''; // Clear the root element before appending products
 
+    let products = [];
     snapshot.forEach(function (childSnapshot) {
-      let productObj = childSnapshot;
+      products.push(childSnapshot);
+    });
+    console.log(products)
 
-      // Create rows to group the products
+    for (let i = 0; i < products.length; i += 4) {
+      // Create a row to group three products
       let row = createRow(root, true);
 
-      // Build each product and append it to the row
-      buildProduct(productObj, row);
-    });
+      // Build and append three products to the row
+      for (let j = i; j < i + 4 && j < products.length; j++) {
+        let productObj = products[j];
+        buildProduct(productObj, row);
+      }
+    }
   });
 }
+
 // By adding root.innerHTML = ''; at the beginning of the showShopItems function, you ensure that the root element is cleared before appending the products. This should prevent the "Cannot read properties of null" error.
 
 // If the error persists, please double-check that the root element exists and has the correct ID or class name specified in your HTML file. Additionally, make sure that you have correctly initialized Firebase and have the appropriate data in your Firebase Realtime Database.
